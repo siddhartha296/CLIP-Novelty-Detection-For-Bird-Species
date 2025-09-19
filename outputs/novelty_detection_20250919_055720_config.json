@@ -1,0 +1,28 @@
+{
+  "dataset": {
+    "path": "CUB_200_2011/images",
+    "seen_classes": 150,
+    "max_images_per_class": 100,
+    "test_size": 0.3,
+    "random_state": 42
+  },
+  "model": {
+    "n_components": 50,
+    "n_neighbors": 10,
+    "contamination": 0.35,
+    "metric": "cosine"
+  },
+  "preprocessing": {
+    "standardize": true,
+    "clip_model": "ViT-B/32"
+  },
+  "experiment": {
+    "timestamp": "2025-09-19T06:00:25.464399",
+    "device_info": {
+      "device": "cuda",
+      "device_name": "Tesla V100-PCIE-32GB",
+      "memory_total": 34072559616,
+      "memory_available": 0
+    }
+  }
+}
