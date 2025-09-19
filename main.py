@@ -61,9 +61,11 @@ def run_baseline_experiment(config: dict, experiment_tracker: ExperimentTracker 
         y_pred = detector.predict(data['X_test'])
         y_scores = detector.predict_proba(data['X_test'])
         
-        # Comprehensive evaluation
+        # Comprehensive evaluation with proper zero-shot metrics
         results = evaluator.evaluate_comprehensive(
-            data['y_test'], y_pred, y_scores
+            data['y_test'], y_pred, y_scores, 
+            class_labels=data.get('test_class_labels'),
+            is_seen_class=data.get('is_seen_class')
         )
         
         # Print detailed report

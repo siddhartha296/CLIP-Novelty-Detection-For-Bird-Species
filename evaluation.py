@@ -92,46 +92,82 @@ class NoveltyDetectionEvaluator:
         }
     
     def compute_zero_shot_metrics(self, y_true: np.ndarray, y_pred: np.ndarray, 
-                                 class_labels: Optional[np.ndarray] = None) -> Dict[str, float]:
+                                 class_labels: Optional[np.ndarray] = None,
+                                 is_seen_class: Optional[np.ndarray] = None) -> Dict[str, float]:
         """
         Compute zero-shot learning specific metrics
-        Note: This is a placeholder - actual implementation would require class-level predictions
+        
+        Args:
+            y_true: True binary labels (0=seen/normal, 1=novel/unseen)
+            y_pred: Predicted binary labels
+            class_labels: Class indices for each sample
+            is_seen_class: Boolean array indicating if each class is seen (True) or unseen (False)
         """
+        overall_accuracy = accuracy_score(y_true, y_pred)
+        
         if class_labels is None:
             return {
                 'seen_accuracy': 0.0,
                 'unseen_accuracy': 0.0, 
                 'harmonic_mean': 0.0,
-                'overall_accuracy': accuracy_score(y_true, y_pred),
+                'overall_accuracy': overall_accuracy,
                 'mean_per_class_accuracy': 0.0,
                 'std_per_class_accuracy': 0.0
             }
         
-        # For actual zero-shot evaluation, you'd compute per-class accuracies
-        # and then aggregate them appropriately
+        # Compute per-class accuracies
         unique_classes = np.unique(class_labels)
         per_class_acc = []
+        seen_class_accs = []
+        unseen_class_accs = []
         
         for cls in unique_classes:
             mask = class_labels == cls
             if mask.sum() > 0:
                 cls_acc = accuracy_score(y_true[mask], y_pred[mask])
                 per_class_acc.append(cls_acc)
+                
+                # Determine if this is a seen or unseen class
+                if is_seen_class is not None and len(is_seen_class) > cls:
+                    if is_seen_class[cls]:
+                        seen_class_accs.append(cls_acc)
+                    else:
+                        unseen_class_accs.append(cls_acc)
+                else:
+                    # Fallback: use y_true to determine seen vs unseen
+                    # If majority of samples in this class are labeled as seen (0), it's a seen class
+                    if np.mean(y_true[mask]) < 0.5:
+                        seen_class_accs.append(cls_acc)
+                    else:
+                        unseen_class_accs.append(cls_acc)
         
+        # Calculate metrics
         mean_acc = np.mean(per_class_acc) if per_class_acc else 0.0
         std_acc = np.std(per_class_acc) if per_class_acc else 0.0
         
+        seen_accuracy = np.mean(seen_class_accs) if seen_class_accs else 0.0
+        unseen_accuracy = np.mean(unseen_class_accs) if unseen_class_accs else 0.0
+        
+        # Harmonic mean (standard zero-shot learning metric)
+        if seen_accuracy + unseen_accuracy > 0:
+            harmonic_mean = 2 * (seen_accuracy * unseen_accuracy) / (seen_accuracy + unseen_accuracy)
+        else:
+            harmonic_mean = 0.0
+        
         return {
-            'seen_accuracy': 0.0,  # Would need seen/unseen class labels
-            'unseen_accuracy': 0.0,
-            'harmonic_mean': 0.0,
-            'overall_accuracy': accuracy_score(y_true, y_pred),
+            'seen_accuracy': seen_accuracy,
+            'unseen_accuracy': unseen_accuracy,
+            'harmonic_mean': harmonic_mean,
+            'overall_accuracy': overall_accuracy,
             'mean_per_class_accuracy': mean_acc,
-            'std_per_class_accuracy': std_acc
+            'std_per_class_accuracy': std_acc,
+            'n_seen_classes': len(seen_class_accs),
+            'n_unseen_classes': len(unseen_class_accs)
         }
     
     def evaluate_comprehensive(self, y_true: np.ndarray, y_pred: np.ndarray, 
-                              y_scores: np.ndarray, class_labels: Optional[np.ndarray] = None) -> Dict:
+                              y_scores: np.ndarray, class_labels: Optional[np.ndarray] = None,
+                              is_seen_class: Optional[np.ndarray] = None) -> Dict:
         """Perform comprehensive evaluation"""
         
         logger.info("Computing comprehensive evaluation metrics...")
@@ -147,8 +183,8 @@ class NoveltyDetectionEvaluator:
         # Calibration metrics
         results.update(self.compute_calibration_metrics(y_true, y_scores))
         
-        # Zero-shot metrics
-        results.update(self.compute_zero_shot_metrics(y_true, y_pred, class_labels))
+        # Zero-shot metrics with proper class information
+        results.update(self.compute_zero_shot_metrics(y_true, y_pred, class_labels, is_seen_class))
         
         # Confusion matrix
         results['confusion_matrix'] = confusion_matrix(y_true, y_pred)

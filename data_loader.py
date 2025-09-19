@@ -99,6 +99,14 @@ class DatasetProcessor:
             stratify=class_labels
         )
     
+    def create_train_val_split_with_classes(self, X: np.ndarray, y: np.ndarray, class_labels: np.ndarray,
+                                           test_size: float = 0.3, random_state: int = 42) -> Tuple[np.ndarray, ...]:
+        """Create train/validation split with stratification, returning class labels too"""
+        return train_test_split(
+            X, y, class_labels, test_size=test_size, random_state=random_state, 
+            stratify=class_labels
+        )
+    
     def prepare_test_set(self, X_seen_val: np.ndarray, y_seen_val: np.ndarray,
                         X_novel: np.ndarray, y_novel: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """Combine validation seen + novel for final evaluation"""
@@ -134,13 +142,24 @@ def load_and_process_data(dataset_path: str, seen_classes: int = 150,
         novel_class_list, dataset_path, "novel", max_images_per_class
     )
     
+    # Adjust novel class labels to be global indices (not starting from 0)
+    novel_class_labels = novel_class_labels + seen_classes
+    
     # Create train/val split for seen data
-    X_seen_train, X_seen_val, y_seen_train, y_seen_val = processor.create_train_val_split(
+    X_seen_train, X_seen_val, y_seen_train, y_seen_val, seen_train_cls, seen_val_cls = processor.create_train_val_split_with_classes(
         X_seen, y_seen, seen_class_labels, test_size, random_state
     )
     
     # Prepare final test set
     X_test, y_test = processor.prepare_test_set(X_seen_val, y_seen_val, X_novel, y_novel)
+    
+    # Combine class labels for test set
+    test_class_labels = np.hstack([seen_val_cls, novel_class_labels])
+    
+    # Create is_seen_class array
+    total_classes = seen_classes + len(novel_class_list)
+    is_seen_class = np.zeros(total_classes, dtype=bool)
+    is_seen_class[:seen_classes] = True  # First 'seen_classes' are seen, rest are novel
     
     return {
         'X_seen_train': X_seen_train,
@@ -152,6 +171,10 @@ def load_and_process_data(dataset_path: str, seen_classes: int = 150,
         'y_novel': y_novel,
         'y_test': y_test,
         'seen_class_labels': seen_class_labels,
+        'test_class_labels': test_class_labels,  # Class labels for test set
+        'is_seen_class': is_seen_class,          # Boolean array indicating seen vs unseen classes
+        'seen_class_list': seen_class_list,      # List of seen class names
+        'novel_class_list': novel_class_list,    # List of novel class names
         'extractor': extractor,
         'processor': processor
     }
