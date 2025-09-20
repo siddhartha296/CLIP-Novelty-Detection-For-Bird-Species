@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "experiment_name": "multi_dataset_20250920",
+    "created_at": "2025-09-20T05:35:04.427280",
+    "device_info": {
+      "device": "cuda",
+      "device_name": "Tesla V100-PCIE-32GB",
+      "memory_total": 34072559616,
+      "memory_available": 0
+    }
+  },
+  "experiments": [
+    {
+      "timestamp": "2025-09-20T05:44:56.890163",
+      "config": {
+        "dataset": "CUB",
+        "parameters": {
+          "max_images_per_class": 100,
+          "image_extensions": [
+            ".jpg",
+            ".jpeg"
+          ],
+          "default_pca_components": 50,
+          "default_contamination": 0.35,
+          "clip_model": "ViT-B/32"
+        },
+        "optimization": true
+      },
+      "results": {
+        "accuracy": 0.6449314092285765,
+        "precision": 0.742643391521197,
+        "recall": 0.5020229265003372,
+        "f1_score": 0.5990746328706498,
+        "roc_auc": 0.7488067128246815,
+        "specificity": 0.8050623347185493,
+        "pr_auc": 0.7311319375401046,
+        "fpr_at_95_tpr": 0.6822818284850775,
+        "tnr_at_95_tpr": 0.31771817151492254,
+        "youdens_index": 0.3681541540812243,
+        "ausuc": 0.7488067128246815,
+        "brier_score": 0.2916598873998116,
+        "ece": 0.21768718110394514,
+        "seen_accuracy": 0.8044978153654625,
+        "unseen_accuracy": 0.5033329081720356,
+        "harmonic_mean": 0.6192395051412591,
+        "overall_accuracy": 0.6449314092285765,
+        "mean_per_class_accuracy": 0.7292065885671056,
+        "std_per_class_accuracy": 0.19042368919704558,
+        "n_seen_classes": 150,
+        "n_unseen_classes": 50,
+        "confusion_matrix": "[[2131  516]\n [1477 1489]]"
+      },
+      "model_path": "models/cub_pca_lof_20250920_054455.pkl"
+    },
+    {
+      "timestamp": "2025-09-20T05:54:15.634377",
+      "config": {
+        "dataset": "FLO",
+        "parameters": {
+          "max_images_per_class": 80,
+          "image_extensions": [
+            ".jpg",
+            ".jpeg"
+          ],
+          "default_pca_components": 45,
+          "default_contamination": 0.25,
+          "clip_model": "ViT-B/32"
+        },
+        "optimization": true
+      },
+      "results": {
+        "accuracy": 0.8102141680395387,
+        "precision": 0.7721088435374149,
+        "recall": 0.88671875,
+        "f1_score": 0.8254545454545454,
+        "roc_auc": 0.8927353478708028,
+        "specificity": 0.7318212141427618,
+        "pr_auc": 0.8837837593884655,
+        "fpr_at_95_tpr": 0.38625750500333556,
+        "tnr_at_95_tpr": 0.6137424949966644,
+        "youdens_index": 0.6242542771569936,
+        "ausuc": 0.8927353478708028,
+        "brier_score": 0.29961393504472544,
+        "ece": 0.2991377093985566,
+        "seen_accuracy": 0.7305247387159699,
+        "unseen_accuracy": 0.8853358373117313,
+        "harmonic_mean": 0.800514278054828,
+        "overall_accuracy": 0.8102141680395387,
+        "mean_per_class_accuracy": 0.7639153678248594,
+        "std_per_class_accuracy": 0.14552874918624664,
+        "n_seen_classes": 80,
+        "n_unseen_classes": 22,
+        "confusion_matrix": "[[1097  402]\n [ 174 1362]]"
+      },
+      "model_path": "models/flo_pca_lof_20250920_055414.pkl"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "experiment_name": "cub_multi_dataset_20250920",
+  "datasets": [
+    "CUB"
+  ],
+  "results": {
+    "CUB": {
+      "accuracy": 0.6860858720826652,
+      "precision": 0.6911111111111111,
+      "recall": 0.7339851652056641,
+      "f1_score": 0.7119032047089601,
+      "roc_auc": 0.7387804766831038,
+      "specificity": 0.6324140536456365,
+      "pr_auc": 0.7011278881270158,
+      "fpr_at_95_tpr": 0.6615035889686437,
+      "tnr_at_95_tpr": 0.3384964110313563,
+      "youdens_index": 0.3706240299008967,
+      "ausuc": 0.7387804766831038,
+      "brier_score": 0.29514869616292716,
+      "ece": 0.2324286621391363,
+      "seen_accuracy": 0.6319173908879792,
+      "unseen_accuracy": 0.7347280953526939,
+      "harmonic_mean": 0.6794555950344028,
+      "overall_accuracy": 0.6860858720826652,
+      "mean_per_class_accuracy": 0.6576200670041579,
+      "std_per_class_accuracy": 0.1775570208843952,
+      "n_seen_classes": 150,
+      "n_unseen_classes": 50,
+      "confusion_matrix": "[[1674  973]\n [ 789 2177]]"
+    }
+  },
+  "summary": {
+    "best_dataset": "CUB",
+    "best_score": 0.6794555950344028,
+    "avg_roc_auc": 0.7387804766831038,
+    "avg_h_mean": 0.6794555950344028,
+    "std_roc_auc": 0.0,
+    "std_h_mean": 0.0
+  }
+}

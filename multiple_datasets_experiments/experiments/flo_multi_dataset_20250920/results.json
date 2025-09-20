@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "experiment_name": "flo_multi_dataset_20250920",
+    "created_at": "2025-09-20T05:19:23.003783",
+    "device_info": {
+      "device": "cuda",
+      "device_name": "Tesla V100-PCIE-32GB",
+      "memory_total": 34072559616,
+      "memory_available": 0
+    }
+  },
+  "experiments": [
+    {
+      "timestamp": "2025-09-20T05:21:04.384016",
+      "config": {
+        "dataset": "FLO",
+        "parameters": {
+          "max_images_per_class": 80,
+          "image_extensions": [
+            ".jpg",
+            ".jpeg"
+          ],
+          "default_pca_components": 45,
+          "default_contamination": 0.25,
+          "clip_model": "ViT-B/32"
+        },
+        "optimization": false
+      },
+      "results": {
+        "accuracy": 0.7980230642504118,
+        "precision": 0.767536231884058,
+        "recall": 0.8619791666666666,
+        "f1_score": 0.8120208524992334,
+        "roc_auc": 0.8869098496219702,
+        "specificity": 0.7324883255503669,
+        "pr_auc": 0.8741148790538233,
+        "fpr_at_95_tpr": 0.39959973315543695,
+        "tnr_at_95_tpr": 0.600400266844563,
+        "youdens_index": 0.6100842401879031,
+        "ausuc": 0.8869098496219702,
+        "brier_score": 0.29895260932626083,
+        "ece": 0.302482491422058,
+        "seen_accuracy": 0.7267379756022869,
+        "unseen_accuracy": 0.8616893849603856,
+        "harmonic_mean": 0.788481002999422,
+        "overall_accuracy": 0.7980230642504118,
+        "mean_per_class_accuracy": 0.7558451423265827,
+        "std_per_class_accuracy": 0.16913506207669263,
+        "n_seen_classes": 80,
+        "n_unseen_classes": 22,
+        "confusion_matrix": "[[1098  401]\n [ 212 1324]]"
+      },
+      "model_path": "models/flo_pca_lof_20250920_052103.pkl"
+    }
+  ]
+}

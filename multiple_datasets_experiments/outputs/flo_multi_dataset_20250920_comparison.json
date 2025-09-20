@@ -1,0 +1,40 @@
+{
+  "experiment_name": "flo_multi_dataset_20250920",
+  "datasets": [
+    "FLO"
+  ],
+  "results": {
+    "FLO": {
+      "accuracy": 0.7980230642504118,
+      "precision": 0.767536231884058,
+      "recall": 0.8619791666666666,
+      "f1_score": 0.8120208524992334,
+      "roc_auc": 0.8869098496219702,
+      "specificity": 0.7324883255503669,
+      "pr_auc": 0.8741148790538233,
+      "fpr_at_95_tpr": 0.39959973315543695,
+      "tnr_at_95_tpr": 0.600400266844563,
+      "youdens_index": 0.6100842401879031,
+      "ausuc": 0.8869098496219702,
+      "brier_score": 0.29895260932626083,
+      "ece": 0.302482491422058,
+      "seen_accuracy": 0.7267379756022869,
+      "unseen_accuracy": 0.8616893849603856,
+      "harmonic_mean": 0.788481002999422,
+      "overall_accuracy": 0.7980230642504118,
+      "mean_per_class_accuracy": 0.7558451423265827,
+      "std_per_class_accuracy": 0.16913506207669263,
+      "n_seen_classes": 80,
+      "n_unseen_classes": 22,
+      "confusion_matrix": "[[1098  401]\n [ 212 1324]]"
+    }
+  },
+  "summary": {
+    "best_dataset": "FLO",
+    "best_score": 0.788481002999422,
+    "avg_roc_auc": 0.8869098496219702,
+    "avg_h_mean": 0.788481002999422,
+    "std_roc_auc": 0.0,
+    "std_h_mean": 0.0
+  }
+}
