@@ -1,0 +1,263 @@
+jupyter-228w1a12b8@gpuserver:~/organised_code_sid/CLIP-Novelty-Detection-For-Bird-Species/multiple_datasets_experiments$ python run_multi_dataset.py --datasets CUB FLO --experiment_name "test_before_updating the model to use text embedding and improving the imbalancein unseen and seen accuracy "
+🎯 Multi-Dataset Novelty Detection Experiments
+Datasets: ['CUB', 'FLO']
+Optimization: Disabled
+Experiment: test_before_updating the model to use text embedding and improving the imbalancein unseen and seen accuracy 
+2025-10-03 04:37:45,165 - __main__ - INFO - 🎯 Running experiments on 2 datasets
+2025-10-03 04:37:45,166 - __main__ - INFO - Validating CUB dataset...
+2025-10-03 04:37:45,166 - dataset_adapter - INFO - ✅ CUB-200-2011 dataset validated: 200 classes found
+2025-10-03 04:37:45,166 - __main__ - INFO - ✅ CUB dataset validated
+2025-10-03 04:37:45,166 - __main__ - INFO - Validating FLO dataset...
+2025-10-03 04:37:45,167 - dataset_adapter - INFO - ✅ Oxford-102 Flowers dataset validated: 102 classes found
+2025-10-03 04:37:45,167 - __main__ - INFO - ✅ FLO dataset validated
+2025-10-03 04:37:45,167 - __main__ - INFO - 🚀 Starting experiment on CUB
+
+============================================================
+DATASET: CUB-200-2011
+============================================================
+Path: CUB_200_2011/images
+Total classes: 200
+Seen classes: 150
+Novel classes: 50
+Max images per class: 100
+PCA components: 50
+Contamination: 0.35
+CLIP model: ViT-B/32
+============================================================
+2025-10-03 04:37:45,167 - root - INFO - Starting CUB data loading...
+2025-10-03 04:37:45,167 - dataset_adapter - INFO - 🔄 Loading CUB dataset...
+2025-10-03 04:37:49,316 - dataset_adapter - INFO - ✅ CLIP model ViT-B/32 loaded for CUB-200-2011
+2025-10-03 04:37:49,316 - dataset_adapter - INFO - 📊 CUB-200-2011: 150 seen | 50 novel classes
+Processing seen classes (CUB): 100%|████████████████████████████████████████████████| 150/150 [02:02<00:00,  1.22it/s]
+2025-10-03 04:39:51,983 - dataset_adapter - INFO - Extracted 8822 embeddings for seen classes (CUB)
+Processing novel classes (CUB): 100%|█████████████████████████████████████████████████| 50/50 [00:39<00:00,  1.27it/s]
+2025-10-03 04:40:31,357 - dataset_adapter - INFO - Extracted 2966 embeddings for novel classes (CUB)
+2025-10-03 04:40:31,374 - dataset_adapter - INFO - 📊 Final test set: (5613, 512) with 2647 seen, 2966 novel
+2025-10-03 04:40:31,374 - root - INFO - Completed CUB data loading in 2m 46s
+2025-10-03 04:40:31,374 - root - INFO - Starting CUB model training...
+2025-10-03 04:40:31,375 - novelty_detector - INFO - Fitting PCA + LOF novelty detector...
+2025-10-03 04:40:32,645 - novelty_detector - INFO - ✅ Model fitted with 50 PCA components
+2025-10-03 04:40:32,645 - novelty_detector - INFO -    Variance explained: 0.755
+2025-10-03 04:40:32,645 - root - INFO - Completed CUB model training in 1.3s
+2025-10-03 04:40:32,645 - root - INFO - Starting CUB evaluation...
+2025-10-03 04:40:34,070 - evaluation - INFO - Computing comprehensive evaluation metrics...
+
+============================================================
+RESULTS FOR CUB
+============================================================
+
+==================================================
+COMPREHENSIVE EVALUATION REPORT
+==================================================
+
+BINARY CLASSIFICATION METRICS:
+- ROC AUC: 0.7388
+- PR AUC: 0.7011
+- Accuracy: 0.6861
+- Precision: 0.6911
+- Recall: 0.7340
+- F1-Score: 0.7119
+- Specificity: 0.6324
+
+ADVANCED DETECTION METRICS:
+- FPR@95% TPR: 0.6615
+- TNR@95% TPR: 0.3385
+- Youden's Index: 0.3706
+
+ZERO-SHOT LEARNING METRICS:
+- Seen Accuracy (Acc_S): 0.6319
+- Unseen Accuracy (Acc_U): 0.7347
+- Harmonic Mean (H): 0.6795
+- Overall Accuracy: 0.6861
+
+CALIBRATION METRICS:
+- Expected Calibration Error (ECE): 0.2324
+- Brier Score: 0.2951
+
+PER-CLASS ANALYSIS:
+- Mean Per-Class Accuracy: 0.6576 ± 0.1776
+
+CONFUSION MATRIX:
+[[1674  973]
+ [ 789 2177]]
+
+AUSUC (Area Under Seen-Unseen Accuracy Curve): 0.7388
+
+DETAILED CLASSIFICATION REPORT:
+                 precision    recall  f1-score   support
+
+  Seen (Normal)       0.68      0.63      0.66      2647
+Novel (Anomaly)       0.69      0.73      0.71      2966
+
+       accuracy                           0.69      5613
+      macro avg       0.69      0.68      0.68      5613
+   weighted avg       0.69      0.69      0.69      5613
+
+2025-10-03 04:40:34,164 - root - INFO - Completed CUB evaluation in 1.5s
+2025-10-03 04:40:34,167 - novelty_detector - INFO - Model saved to models/cub_pca_lof_20251003_044034.pkl
+2025-10-03 04:40:34,787 - evaluation - INFO - Plot saved to plots/test_before_updating the model to use text embedding and improving the imbalancein unseen and seen accuracy _cub/performance_curves.png
+2025-10-03 04:40:35,215 - evaluation - INFO - Plot saved to plots/test_before_updating the model to use text embedding and improving the imbalancein unseen and seen accuracy _cub/score_distribution.png
+
+📊 Literature Comparison for CUB:
+--------------------------------------------------
+CLIP                 | H-Mean: 0.620
+DUET                 | H-Mean: 0.757
+SJE                  | H-Mean: 0.591
+Our PCA+LOF          | H-Mean: 0.679
+2025-10-03 04:40:35,215 - __main__ - INFO - ✅ CUB experiment completed
+2025-10-03 04:40:35,216 - __main__ - INFO - 🚀 Starting experiment on FLO
+
+============================================================
+DATASET: Oxford-102 Flowers
+============================================================
+Path: oxford-102-flowers/jpg
+Total classes: 102
+Seen classes: 80
+Novel classes: 22
+Max images per class: 80
+PCA components: 45
+Contamination: 0.25
+CLIP model: ViT-B/32
+============================================================
+2025-10-03 04:40:35,217 - root - INFO - Starting FLO data loading...
+2025-10-03 04:40:35,217 - dataset_adapter - INFO - 🔄 Loading FLO dataset...
+2025-10-03 04:40:38,880 - dataset_adapter - INFO - ✅ CLIP model ViT-B/32 loaded for Oxford-102 Flowers
+2025-10-03 04:40:38,881 - dataset_adapter - INFO - FLO: 80 seen classes, 22 novel classes
+2025-10-03 04:40:38,881 - dataset_adapter - INFO - 📊 Oxford-102 Flowers: 80 seen | 22 novel classes
+Processing seen classes (FLO): 100%|██████████████████████████████████████████████████| 80/80 [01:23<00:00,  1.04s/it]
+2025-10-03 04:42:02,294 - dataset_adapter - INFO - Extracted 4996 embeddings for seen classes (FLO)
+Processing novel classes (FLO): 100%|█████████████████████████████████████████████████| 22/22 [00:23<00:00,  1.08s/it]
+2025-10-03 04:42:25,953 - dataset_adapter - INFO - Extracted 1536 embeddings for novel classes (FLO)
+2025-10-03 04:42:25,965 - dataset_adapter - INFO - 📊 Final test set: (3035, 512) with 1499 seen, 1536 novel
+2025-10-03 04:42:25,965 - root - INFO - Completed FLO data loading in 1m 50s
+2025-10-03 04:42:25,965 - root - INFO - Starting FLO model training...
+2025-10-03 04:42:25,965 - novelty_detector - INFO - Fitting PCA + LOF novelty detector...
+2025-10-03 04:42:27,236 - novelty_detector - INFO - ✅ Model fitted with 45 PCA components
+2025-10-03 04:42:27,237 - novelty_detector - INFO -    Variance explained: 0.781
+2025-10-03 04:42:27,237 - root - INFO - Completed FLO model training in 1.3s
+2025-10-03 04:42:27,237 - root - INFO - Starting FLO evaluation...
+2025-10-03 04:42:27,629 - evaluation - INFO - Computing comprehensive evaluation metrics...
+
+============================================================
+RESULTS FOR FLO
+============================================================
+
+==================================================
+COMPREHENSIVE EVALUATION REPORT
+==================================================
+
+BINARY CLASSIFICATION METRICS:
+- ROC AUC: 0.8876
+- PR AUC: 0.8748
+- Accuracy: 0.8026
+- Precision: 0.7691
+- Recall: 0.8717
+- F1-Score: 0.8172
+- Specificity: 0.7318
+
+ADVANCED DETECTION METRICS:
+- FPR@95% TPR: 0.3983
+- TNR@95% TPR: 0.6017
+- Youden's Index: 0.6114
+
+ZERO-SHOT LEARNING METRICS:
+- Seen Accuracy (Acc_S): 0.7264
+- Unseen Accuracy (Acc_U): 0.8710
+- Harmonic Mean (H): 0.7922
+- Overall Accuracy: 0.8026
+
+CALIBRATION METRICS:
+- Expected Calibration Error (ECE): 0.3017
+- Brier Score: 0.2989
+
+PER-CLASS ANALYSIS:
+- Mean Per-Class Accuracy: 0.7576 ± 0.1654
+
+CONFUSION MATRIX:
+[[1097  402]
+ [ 197 1339]]
+
+AUSUC (Area Under Seen-Unseen Accuracy Curve): 0.8876
+
+DETAILED CLASSIFICATION REPORT:
+                 precision    recall  f1-score   support
+
+  Seen (Normal)       0.85      0.73      0.79      1499
+Novel (Anomaly)       0.77      0.87      0.82      1536
+
+       accuracy                           0.80      3035
+      macro avg       0.81      0.80      0.80      3035
+   weighted avg       0.81      0.80      0.80      3035
+
+2025-10-03 04:42:27,683 - root - INFO - Completed FLO evaluation in 0.4s
+2025-10-03 04:42:27,686 - novelty_detector - INFO - Model saved to models/flo_pca_lof_20251003_044227.pkl
+2025-10-03 04:42:28,276 - evaluation - INFO - Plot saved to plots/test_before_updating the model to use text embedding and improving the imbalancein unseen and seen accuracy _flo/performance_curves.png
+2025-10-03 04:42:28,678 - evaluation - INFO - Plot saved to plots/test_before_updating the model to use text embedding and improving the imbalancein unseen and seen accuracy _flo/score_distribution.png
+
+📊 Literature Comparison for FLO:
+--------------------------------------------------
+CLIP                 | H-Mean: 0.744
+Visual-Semantic      | H-Mean: 0.682
+Attribute-based      | H-Mean: 0.638
+Our PCA+LOF          | H-Mean: 0.792
+2025-10-03 04:42:28,678 - __main__ - INFO - ✅ FLO experiment completed
+
+================================================================================
+CROSS-DATASET COMPARISON REPORT
+================================================================================
+
+Dataset         ROC AUC    H-Mean     Seen Acc   Unseen Acc   F1-Score  
+--------------------------------------------------------------------------------
+CUB             0.739      0.679      0.632      0.735        0.712     
+FLO             0.888      0.792      0.726      0.871        0.817     
+
+🏆 Best performing dataset: FLO (H-Mean: 0.792)
+
+📊 Dataset Characteristics Analysis:
+--------------------------------------------------
+
+CUB:
+  Classes: 200 (150 seen, 50 novel)
+  Performance: ROC AUC 0.739, H-Mean 0.679
+  ✅ Good zero-shot performance
+
+FLO:
+  Classes: 102 (80 seen, 22 novel)
+  Performance: ROC AUC 0.888, H-Mean 0.792
+  ✅ Excellent zero-shot performance
+
+🔍 Cross-Dataset Insights:
+--------------------------------------------------
+Average ROC AUC across datasets: 0.813 ± 0.074
+Average H-Mean across datasets: 0.736 ± 0.056
+
+Dataset difficulty ranking (easiest to hardest):
+  1. FLO (H-Mean: 0.792)
+  2. CUB (H-Mean: 0.679)
+
+📄 LaTeX Table for Paper:
+============================================================
+
+% Cross-dataset comparison table
+\begin{table}[htbp]
+\centering
+\caption{Cross-Dataset Performance Comparison}
+\label{tab:cross_dataset}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{Dataset} & \textbf{Classes} & \textbf{ROC AUC} & \textbf{H-Mean} & \textbf{Seen Acc} & \textbf{Unseen Acc} \\
+\hline
+CUB & 200 & 0.739 & 0.679 & 0.632 & 0.735 \\
+FLO & 102 & 0.888 & 0.792 & 0.726 & 0.871 \\
+\hline
+\textbf{Average} & - & \textbf{0.813} & \textbf{0.736} & \textbf{0.679} & \textbf{0.803} \\
+\hline
+\end{tabular}
+\end{table}
+
+
+✅ All experiments completed successfully!
+📁 Results saved to: outputs/test_before_updating the model to use text embedding and improving the imbalancein unseen and seen accuracy *
+🤖 Models saved to: models/
+📊 Plots saved to: plots/test_before_updating the model to use text embedding and improving the imbalancein unseen and seen accuracy */
+jupyter-228w1a12b8@gpuserver:~/organised_code_sid/CLIP-Novelty-Detection-For-Bird-Species/multiple_datasets_experiments$ 
