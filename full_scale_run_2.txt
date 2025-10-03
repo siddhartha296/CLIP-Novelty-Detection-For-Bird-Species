@@ -1,0 +1,371 @@
+jupyter-228w1a12b8@gpuserver:~/git_clone_2/CLIP-Novelty-Detection-For-Bird-Species/multiple_datasets_experiments$ python run_multi_dataset.py --datasets CUB AWA2 FLO --experiment_n
+ame "Full_scale_test_222222_on_AwA2"
+🎯 Multi-Dataset Novelty Detection Experiments
+Datasets: ['CUB', 'AWA2', 'FLO']
+Optimization: Disabled
+Experiment: Full_scale_test_222222_on_AwA2
+2025-10-03 07:45:19,981 - __main__ - INFO - 🎯 Running experiments on 3 datasets
+2025-10-03 07:45:19,981 - __main__ - INFO - Validating CUB dataset...
+2025-10-03 07:45:19,982 - dataset_adapter - INFO - ✅ CUB-200-2011 dataset validated: 200 classes found
+2025-10-03 07:45:19,982 - __main__ - INFO - ✅ CUB dataset validated
+2025-10-03 07:45:19,982 - __main__ - INFO - Validating AWA2 dataset...
+2025-10-03 07:45:19,982 - dataset_adapter - INFO - ✅ Animals with Attributes 2 dataset validated: 50 classes found
+2025-10-03 07:45:19,982 - __main__ - INFO - ✅ AWA2 dataset validated
+2025-10-03 07:45:19,982 - __main__ - INFO - Validating FLO dataset...
+2025-10-03 07:45:19,983 - dataset_adapter - INFO - ✅ Oxford-102 Flowers dataset validated: 102 classes found
+2025-10-03 07:45:19,983 - __main__ - INFO - ✅ FLO dataset validated
+2025-10-03 07:45:19,983 - __main__ - INFO - 🚀 Starting experiment on CUB
+
+============================================================
+DATASET: CUB-200-2011
+============================================================
+Path: CUB_200_2011/images
+Total classes: 200
+Seen classes: 150
+Novel classes: 50
+Max images per class: 100
+PCA components: 50
+Contamination: 0.35
+CLIP model: ViT-B/32
+============================================================
+2025-10-03 07:45:19,983 - root - INFO - Starting CUB data loading...
+2025-10-03 07:45:19,983 - dataset_adapter - INFO - 🔄 Loading CUB dataset...
+2025-10-03 07:45:24,425 - dataset_adapter - INFO - ✅ CLIP model ViT-B/32 loaded for CUB-200-2011
+2025-10-03 07:45:24,425 - dataset_adapter - INFO - 📊 CUB-200-2011: 150 seen | 50 novel classes
+Processing seen classes (CUB): 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████| 150/150 [02:09<00:00,  1.16it/s]
+2025-10-03 07:47:34,291 - dataset_adapter - INFO - Extracted 8822 embeddings for seen classes (CUB)
+Processing novel classes (CUB): 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50/50 [00:44<00:00,  1.13it/s]
+2025-10-03 07:48:18,496 - dataset_adapter - INFO - Extracted 2966 embeddings for novel classes (CUB)
+2025-10-03 07:48:18,525 - dataset_adapter - INFO - 📊 Final test set: (5613, 512) with 2647 seen, 2966 novel
+2025-10-03 07:48:18,525 - root - INFO - Completed CUB data loading in 2m 58s
+2025-10-03 07:48:18,525 - root - INFO - Starting CUB model training...
+2025-10-03 07:48:18,526 - novelty_detector - INFO - Fitting PCA + LOF novelty detector...
+2025-10-03 07:48:21,163 - novelty_detector - INFO - ✅ Model fitted with 50 PCA components
+2025-10-03 07:48:21,163 - novelty_detector - INFO -    Variance explained: 0.755
+2025-10-03 07:48:21,163 - root - INFO - Completed CUB model training in 2.6s
+2025-10-03 07:48:21,163 - root - INFO - Starting CUB evaluation...
+2025-10-03 07:48:22,752 - evaluation - INFO - Computing comprehensive evaluation metrics...
+
+============================================================
+RESULTS FOR CUB
+============================================================
+
+==================================================
+COMPREHENSIVE EVALUATION REPORT
+==================================================
+
+BINARY CLASSIFICATION METRICS:
+- ROC AUC: 0.7388
+- PR AUC: 0.7011
+- Accuracy: 0.6861
+- Precision: 0.6911
+- Recall: 0.7340
+- F1-Score: 0.7119
+- Specificity: 0.6324
+
+ADVANCED DETECTION METRICS:
+- FPR@95% TPR: 0.6615
+- TNR@95% TPR: 0.3385
+- Youden's Index: 0.3706
+
+ZERO-SHOT LEARNING METRICS:
+- Seen Accuracy (Acc_S): 0.6319
+- Unseen Accuracy (Acc_U): 0.7347
+- Harmonic Mean (H): 0.6795
+- Overall Accuracy: 0.6861
+
+CALIBRATION METRICS:
+- Expected Calibration Error (ECE): 0.2324
+- Brier Score: 0.2951
+
+PER-CLASS ANALYSIS:
+- Mean Per-Class Accuracy: 0.6576 ± 0.1776
+
+CONFUSION MATRIX:
+[[1674  973]
+ [ 789 2177]]
+
+AUSUC (Area Under Seen-Unseen Accuracy Curve): 0.7388
+
+DETAILED CLASSIFICATION REPORT:
+                 precision    recall  f1-score   support
+
+  Seen (Normal)       0.68      0.63      0.66      2647
+Novel (Anomaly)       0.69      0.73      0.71      2966
+
+       accuracy                           0.69      5613
+      macro avg       0.69      0.68      0.68      5613
+   weighted avg       0.69      0.69      0.69      5613
+
+2025-10-03 07:48:22,854 - root - INFO - Completed CUB evaluation in 1.7s
+2025-10-03 07:48:22,859 - novelty_detector - INFO - Model saved to models/cub_pca_lof_20251003_074822.pkl
+2025-10-03 07:48:23,519 - evaluation - INFO - Plot saved to plots/Full_scale_test_222222_on_AwA2_cub/performance_curves.png
+2025-10-03 07:48:23,966 - evaluation - INFO - Plot saved to plots/Full_scale_test_222222_on_AwA2_cub/score_distribution.png
+
+📊 Literature Comparison for CUB:
+--------------------------------------------------
+CLIP                 | H-Mean: 0.620
+DUET                 | H-Mean: 0.757
+SJE                  | H-Mean: 0.591
+Our PCA+LOF          | H-Mean: 0.679
+2025-10-03 07:48:23,966 - __main__ - INFO - ✅ CUB experiment completed
+2025-10-03 07:48:23,968 - __main__ - INFO - 🚀 Starting experiment on AWA2
+
+============================================================
+DATASET: Animals with Attributes 2
+============================================================
+Path: AWA2/JPEGImages
+Total classes: 50
+Seen classes: 40
+Novel classes: 10
+Max images per class: 200
+PCA components: 40
+Contamination: 0.3
+CLIP model: ViT-B/32
+============================================================
+2025-10-03 07:48:23,968 - root - INFO - Starting AWA2 data loading...
+2025-10-03 07:48:23,968 - dataset_adapter - INFO - 🔄 Loading AWA2 dataset...
+2025-10-03 07:48:28,059 - dataset_adapter - INFO - ✅ CLIP model ViT-B/32 loaded for Animals with Attributes 2
+2025-10-03 07:48:28,060 - dataset_adapter - INFO - AWA2: 40 seen classes, 10 novel classes
+2025-10-03 07:48:28,060 - dataset_adapter - INFO - 📊 Animals with Attributes 2: 40 seen | 10 novel classes
+Processing seen classes (AWA2): 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████| 40/40 [03:19<00:00,  5.00s/it]
+2025-10-03 07:51:47,928 - dataset_adapter - INFO - Extracted 7852 embeddings for seen classes (AWA2)
+Processing novel classes (AWA2): 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:50<00:00,  5.03s/it]
+2025-10-03 07:52:38,225 - dataset_adapter - INFO - Extracted 1988 embeddings for novel classes (AWA2)
+2025-10-03 07:52:38,238 - dataset_adapter - INFO - 📊 Final test set: (4344, 512) with 2356 seen, 1988 novel
+2025-10-03 07:52:38,238 - root - INFO - Completed AWA2 data loading in 4m 14s
+2025-10-03 07:52:38,238 - root - INFO - Starting AWA2 model training...
+2025-10-03 07:52:38,239 - novelty_detector - INFO - Fitting PCA + LOF novelty detector...
+2025-10-03 07:52:39,470 - novelty_detector - INFO - ✅ Model fitted with 40 PCA components
+2025-10-03 07:52:39,471 - novelty_detector - INFO -    Variance explained: 0.682
+2025-10-03 07:52:39,471 - root - INFO - Completed AWA2 model training in 1.2s
+2025-10-03 07:52:39,471 - root - INFO - Starting AWA2 evaluation...
+2025-10-03 07:52:40,600 - evaluation - INFO - Computing comprehensive evaluation metrics...
+
+============================================================
+RESULTS FOR AWA2
+============================================================
+
+==================================================
+COMPREHENSIVE EVALUATION REPORT
+==================================================
+
+BINARY CLASSIFICATION METRICS:
+- ROC AUC: 0.8991
+- PR AUC: 0.8851
+- Accuracy: 0.7808
+- Precision: 0.7033
+- Recall: 0.9014
+- F1-Score: 0.7901
+- Specificity: 0.6791
+
+ADVANCED DETECTION METRICS:
+- FPR@95% TPR: 0.4724
+- TNR@95% TPR: 0.5276
+- Youden's Index: 0.6473
+
+ZERO-SHOT LEARNING METRICS:
+- Seen Accuracy (Acc_S): 0.6817
+- Unseen Accuracy (Acc_U): 0.9020
+- Harmonic Mean (H): 0.7765
+- Overall Accuracy: 0.7808
+
+CALIBRATION METRICS:
+- Expected Calibration Error (ECE): 0.3572
+- Brier Score: 0.3319
+
+PER-CLASS ANALYSIS:
+- Mean Per-Class Accuracy: 0.7257 ± 0.1514
+
+CONFUSION MATRIX:
+[[1600  756]
+ [ 196 1792]]
+
+AUSUC (Area Under Seen-Unseen Accuracy Curve): 0.8991
+
+DETAILED CLASSIFICATION REPORT:
+                 precision    recall  f1-score   support
+
+  Seen (Normal)       0.89      0.68      0.77      2356
+Novel (Anomaly)       0.70      0.90      0.79      1988
+
+       accuracy                           0.78      4344
+      macro avg       0.80      0.79      0.78      4344
+   weighted avg       0.81      0.78      0.78      4344
+
+2025-10-03 07:52:40,645 - root - INFO - Completed AWA2 evaluation in 1.2s
+2025-10-03 07:52:40,648 - novelty_detector - INFO - Model saved to models/awa2_pca_lof_20251003_075240.pkl
+2025-10-03 07:52:41,306 - evaluation - INFO - Plot saved to plots/Full_scale_test_222222_on_AwA2_awa2/performance_curves.png
+2025-10-03 07:52:41,771 - evaluation - INFO - Plot saved to plots/Full_scale_test_222222_on_AwA2_awa2/score_distribution.png
+
+📊 Literature Comparison for AWA2:
+--------------------------------------------------
+CLIP                 | H-Mean: 0.638
+DUET                 | H-Mean: 0.740
+SJE                  | H-Mean: 0.590
+Our PCA+LOF          | H-Mean: 0.776
+2025-10-03 07:52:41,772 - __main__ - INFO - ✅ AWA2 experiment completed
+2025-10-03 07:52:41,774 - __main__ - INFO - 🚀 Starting experiment on FLO
+
+============================================================
+DATASET: Oxford-102 Flowers
+============================================================
+Path: oxford-102-flowers/jpg
+Total classes: 102
+Seen classes: 80
+Novel classes: 22
+Max images per class: 80
+PCA components: 45
+Contamination: 0.25
+CLIP model: ViT-B/32
+============================================================
+2025-10-03 07:52:41,775 - root - INFO - Starting FLO data loading...
+2025-10-03 07:52:41,775 - dataset_adapter - INFO - 🔄 Loading FLO dataset...
+2025-10-03 07:52:45,799 - dataset_adapter - INFO - ✅ CLIP model ViT-B/32 loaded for Oxford-102 Flowers
+2025-10-03 07:52:45,800 - dataset_adapter - INFO - FLO: 80 seen classes, 22 novel classes
+2025-10-03 07:52:45,800 - dataset_adapter - INFO - 📊 Oxford-102 Flowers: 80 seen | 22 novel classes
+Processing seen classes (FLO): 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 80/80 [01:21<00:00,  1.02s/it]
+2025-10-03 07:54:07,326 - dataset_adapter - INFO - Extracted 4996 embeddings for seen classes (FLO)
+Processing novel classes (FLO): 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████| 22/22 [00:24<00:00,  1.11s/it]
+2025-10-03 07:54:31,852 - dataset_adapter - INFO - Extracted 1536 embeddings for novel classes (FLO)
+2025-10-03 07:54:31,863 - dataset_adapter - INFO - 📊 Final test set: (3035, 512) with 1499 seen, 1536 novel
+2025-10-03 07:54:31,863 - root - INFO - Completed FLO data loading in 1m 50s
+2025-10-03 07:54:31,863 - root - INFO - Starting FLO model training...
+2025-10-03 07:54:31,863 - novelty_detector - INFO - Fitting PCA + LOF novelty detector...
+2025-10-03 07:54:34,639 - novelty_detector - INFO - ✅ Model fitted with 45 PCA components
+2025-10-03 07:54:34,639 - novelty_detector - INFO -    Variance explained: 0.781
+2025-10-03 07:54:34,640 - root - INFO - Completed FLO model training in 2.8s
+2025-10-03 07:54:34,640 - root - INFO - Starting FLO evaluation...
+2025-10-03 07:54:35,142 - evaluation - INFO - Computing comprehensive evaluation metrics...
+
+============================================================
+RESULTS FOR FLO
+============================================================
+
+==================================================
+COMPREHENSIVE EVALUATION REPORT
+==================================================
+
+BINARY CLASSIFICATION METRICS:
+- ROC AUC: 0.8869
+- PR AUC: 0.8745
+- Accuracy: 0.8007
+- Precision: 0.7683
+- Recall: 0.8678
+- F1-Score: 0.8150
+- Specificity: 0.7318
+
+ADVANCED DETECTION METRICS:
+- FPR@95% TPR: 0.3996
+- TNR@95% TPR: 0.6004
+- Youden's Index: 0.6088
+
+ZERO-SHOT LEARNING METRICS:
+- Seen Accuracy (Acc_S): 0.7263
+- Unseen Accuracy (Acc_U): 0.8674
+- Harmonic Mean (H): 0.7906
+- Overall Accuracy: 0.8007
+
+CALIBRATION METRICS:
+- Expected Calibration Error (ECE): 0.3018
+- Brier Score: 0.2989
+
+PER-CLASS ANALYSIS:
+- Mean Per-Class Accuracy: 0.7567 ± 0.1656
+
+CONFUSION MATRIX:
+[[1097  402]
+ [ 203 1333]]
+
+AUSUC (Area Under Seen-Unseen Accuracy Curve): 0.8869
+
+DETAILED CLASSIFICATION REPORT:
+                 precision    recall  f1-score   support
+
+  Seen (Normal)       0.84      0.73      0.78      1499
+Novel (Anomaly)       0.77      0.87      0.82      1536
+
+       accuracy                           0.80      3035
+      macro avg       0.81      0.80      0.80      3035
+   weighted avg       0.81      0.80      0.80      3035
+
+2025-10-03 07:54:35,202 - root - INFO - Completed FLO evaluation in 0.6s
+2025-10-03 07:54:35,205 - novelty_detector - INFO - Model saved to models/flo_pca_lof_20251003_075435.pkl
+2025-10-03 07:54:35,858 - evaluation - INFO - Plot saved to plots/Full_scale_test_222222_on_AwA2_flo/performance_curves.png
+2025-10-03 07:54:36,308 - evaluation - INFO - Plot saved to plots/Full_scale_test_222222_on_AwA2_flo/score_distribution.png
+
+📊 Literature Comparison for FLO:
+--------------------------------------------------
+CLIP                 | H-Mean: 0.744
+Visual-Semantic      | H-Mean: 0.682
+Attribute-based      | H-Mean: 0.638
+Our PCA+LOF          | H-Mean: 0.791
+2025-10-03 07:54:36,309 - __main__ - INFO - ✅ FLO experiment completed
+
+================================================================================
+CROSS-DATASET COMPARISON REPORT
+================================================================================
+
+Dataset         ROC AUC    H-Mean     Seen Acc   Unseen Acc   F1-Score  
+--------------------------------------------------------------------------------
+CUB             0.739      0.679      0.632      0.735        0.712     
+AWA2            0.899      0.776      0.682      0.902        0.790     
+FLO             0.887      0.791      0.726      0.867        0.815     
+
+🏆 Best performing dataset: FLO (H-Mean: 0.791)
+
+📊 Dataset Characteristics Analysis:
+--------------------------------------------------
+
+CUB:
+  Classes: 200 (150 seen, 50 novel)
+  Performance: ROC AUC 0.739, H-Mean 0.679
+  ✅ Good zero-shot performance
+
+AWA2:
+  Classes: 50 (40 seen, 10 novel)
+  Performance: ROC AUC 0.899, H-Mean 0.776
+  ✅ Excellent zero-shot performance
+
+FLO:
+  Classes: 102 (80 seen, 22 novel)
+  Performance: ROC AUC 0.887, H-Mean 0.791
+  ✅ Excellent zero-shot performance
+
+🔍 Cross-Dataset Insights:
+--------------------------------------------------
+Average ROC AUC across datasets: 0.842 ± 0.073
+Average H-Mean across datasets: 0.749 ± 0.049
+
+Dataset difficulty ranking (easiest to hardest):
+  1. FLO (H-Mean: 0.791)
+  2. AWA2 (H-Mean: 0.776)
+  3. CUB (H-Mean: 0.679)
+
+📄 LaTeX Table for Paper:
+============================================================
+
+% Cross-dataset comparison table
+\begin{table}[htbp]
+\centering
+\caption{Cross-Dataset Performance Comparison}
+\label{tab:cross_dataset}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{Dataset} & \textbf{Classes} & \textbf{ROC AUC} & \textbf{H-Mean} & \textbf{Seen Acc} & \textbf{Unseen Acc} \\
+\hline
+CUB & 200 & 0.739 & 0.679 & 0.632 & 0.735 \\
+AWA2 & 50 & 0.899 & 0.776 & 0.682 & 0.902 \\
+FLO & 102 & 0.887 & 0.791 & 0.726 & 0.867 \\
+\hline
+\textbf{Average} & - & \textbf{0.842} & \textbf{0.749} & \textbf{0.680} & \textbf{0.835} \\
+\hline
+\end{tabular}
+\end{table}
+
+
+✅ All experiments completed successfully!
+📁 Results saved to: outputs/Full_scale_test_222222_on_AwA2*
+🤖 Models saved to: models/
+📊 Plots saved to: plots/Full_scale_test_222222_on_AwA2*/
+jupyter-228w1a12b8@gpuserver:~/git_clone_2/CLIP-Novelty-Detection-For-Bird-Species/multiple_datasets_experiments$ git status
