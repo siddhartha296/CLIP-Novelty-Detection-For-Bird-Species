@@ -1,4 +1,6 @@
 """
+run_multi_dataset.py 
+
 Multi-dataset experiment runner for novelty detection
 Supports CUB, AWA2, and Oxford Flowers datasets
 """

@@ -1,4 +1,6 @@
 """
+evaluation.py
+
 Comprehensive evaluation metrics for novelty detection
 """
 import numpy as np
